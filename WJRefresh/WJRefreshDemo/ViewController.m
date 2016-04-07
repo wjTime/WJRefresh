@@ -32,6 +32,7 @@
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:tableView];
     self.mtableView = tableView;
     
@@ -39,7 +40,7 @@
     __weak typeof(refresh)weakRefresh = refresh;
     [refresh addHeardRefreshTo:self.mtableView heardBlock:^{
         NSLog(@"----------------主页面加载数据----------------");
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakRefresh endHeardRefresh];
         });
     }];

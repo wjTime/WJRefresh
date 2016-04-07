@@ -6,7 +6,8 @@
 //  Copyright © 2016年 com.firsttruck. All rights reserved.
 //
 
-#define WJRefreshDropHeight 40
+#define WJRefreshDropHeight  40
+#define WJRefreshScreenW     [UIScreen mainScreen].bounds.size.width
 #import "WJRefresh.h"
 
 
@@ -25,69 +26,68 @@
 @implementation WJRefresh
 
 - (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock{
-    __weak typeof(self)weakSelf = self;
-    [tableView addSubview:weakSelf];
+
+    [tableView addSubview:self];
+    
     CGRect frame = tableView.frame;
     frame.origin.x = 0;
     frame.origin.y = - WJRefreshDropHeight;
     frame.size.height = WJRefreshDropHeight;
     
-    weakSelf.frame = frame;
-    weakSelf.RefreshTableView = tableView;
-    weakSelf.heardRefresh = heardBlock;
-   [tableView addObserver:weakSelf forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    self.frame = frame;
+    self.RefreshTableView = tableView;
+    self.heardRefresh = heardBlock;
+   [tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-
     CGPoint offSetPoint = [[change valueForKey:@"new"] CGPointValue];
     self.arrowImageView.alpha = 1.0;
     if (offSetPoint.y <= -WJRefreshDropHeight && (!self.isRefreshing)) {
         [UIView animateWithDuration:0.25 animations:^{
-            self.arrowImageView.alpha = 0.0;
             self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI);
         } completion:^(BOOL finished) {
             self.arrowImageView.hidden = YES;
             self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
+             [self.refreshLoadingView startAnimating];
         }];
-        [self.refreshLoadingView startAnimating];
+       
         self.isRefreshing = YES;
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(WJRefreshDropHeight, 0, 0, 0);
-        __weak typeof(self)weakSelf = self;
-        if (weakSelf.heardRefresh) {
-            weakSelf.heardRefresh();
+ 
+        if (self.heardRefresh) {
+            self.heardRefresh();
         }
     }
     if (offSetPoint.y == 0.0) {
-        
         [self.refreshLoadingView stopAnimating];
         self.isRefreshing = NO;
     }
 }
 
 - (void)endHeardRefresh{
-    __weak typeof(self)weakSelf = self;
     [UIView animateWithDuration:0.25 animations:^{
-        weakSelf.RefreshTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.RefreshTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     } completion:^(BOOL finished) {
-        weakSelf.arrowImageView.alpha = 1;
-        weakSelf.arrowImageView.hidden = NO;
+        self.arrowImageView.alpha = 1;
+        self.arrowImageView.hidden = NO;
     }];
-    
 }
-
 
 - (UIActivityIndicatorView *)refreshLoadingView{
     if (_refreshLoadingView == nil) {
-        _refreshLoadingView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 0, WJRefreshDropHeight, WJRefreshDropHeight)];
+        CGPoint point = CGPointMake(self.arrowImageView.frame.size.width/2 + self.arrowImageView.frame.origin.x, self.arrowImageView.frame.size.height/2 + self.arrowImageView.frame.origin.y);
+        _refreshLoadingView = [[UIActivityIndicatorView alloc]init];
+        CGSize size = CGSizeMake(WJRefreshDropHeight, WJRefreshDropHeight);
+        _refreshLoadingView.frame = CGRectMake(point.x - size.width/2, point.y - size.height/2, size.width, size.height);
         _refreshLoadingView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         [self addSubview:_refreshLoadingView];
     }
@@ -96,7 +96,8 @@
 
 - (UIImageView *)arrowImageView{
     if (_arrowImageView == nil) {
-        _arrowImageView = [[UIImageView alloc]initWithFrame:CGRectMake(100, 0, 15, 40)];
+        
+        _arrowImageView = [[UIImageView alloc]initWithFrame:CGRectMake(WJRefreshScreenW/3, 0, 15, WJRefreshDropHeight)];
         _arrowImageView.image = [UIImage imageNamed:@"WJRefreshArrow"];
         [self addSubview:_arrowImageView];
     }
@@ -104,7 +105,7 @@
 }
 
 - (void)dealloc{
-    NSLog(@"dealloc");
+    NSLog(@"WJRefresh dealloc");
     [self.RefreshTableView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
