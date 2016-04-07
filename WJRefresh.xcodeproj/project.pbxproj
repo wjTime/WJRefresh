@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB0867421CB62E1700DAB6EE /* WJRefreshArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB0867411CB62E1700DAB6EE /* WJRefreshArrow@2x.png */; };
 		CB589CC11CB5293300A6A3B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CC01CB5293300A6A3B3 /* main.m */; };
-		CB589CC41CB5293300A6A3B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CC31CB5293300A6A3B3 /* AppDelegate.m */; };
-		CB589CC71CB5293300A6A3B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CC61CB5293300A6A3B3 /* ViewController.m */; };
 		CB589CCA1CB5293300A6A3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB589CC81CB5293300A6A3B3 /* Main.storyboard */; };
 		CB589CCC1CB5293300A6A3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB589CCB1CB5293300A6A3B3 /* Assets.xcassets */; };
 		CB589CCF1CB5293300A6A3B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB589CCD1CB5293300A6A3B3 /* LaunchScreen.storyboard */; };
 		CB589CDA1CB5293300A6A3B3 /* WJRefreshTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CD91CB5293300A6A3B3 /* WJRefreshTests.m */; };
 		CB589CE51CB5293400A6A3B3 /* WJRefreshUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CE41CB5293400A6A3B3 /* WJRefreshUITests.m */; };
+		CB589CF81CB5297F00A6A3B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CF51CB5297F00A6A3B3 /* AppDelegate.m */; };
+		CB589CF91CB5297F00A6A3B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CF71CB5297F00A6A3B3 /* ViewController.m */; };
+		CB589CFC1CB52EEF00A6A3B3 /* WJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CB589CFB1CB52EEF00A6A3B3 /* WJRefresh.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,12 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB0867411CB62E1700DAB6EE /* WJRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WJRefreshArrow@2x.png"; sourceTree = "<group>"; };
 		CB589CBC1CB5293300A6A3B3 /* WJRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WJRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB589CC01CB5293300A6A3B3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CB589CC21CB5293300A6A3B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		CB589CC31CB5293300A6A3B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		CB589CC51CB5293300A6A3B3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		CB589CC61CB5293300A6A3B3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		CB589CC91CB5293300A6A3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB589CCB1CB5293300A6A3B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB589CCE1CB5293300A6A3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +50,12 @@
 		CB589CE01CB5293400A6A3B3 /* WJRefreshUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WJRefreshUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB589CE41CB5293400A6A3B3 /* WJRefreshUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WJRefreshUITests.m; sourceTree = "<group>"; };
 		CB589CE61CB5293400A6A3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB589CF41CB5297F00A6A3B3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CB589CF51CB5297F00A6A3B3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CB589CF61CB5297F00A6A3B3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		CB589CF71CB5297F00A6A3B3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CB589CFA1CB52EEF00A6A3B3 /* WJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJRefresh.h; sourceTree = "<group>"; };
+		CB589CFB1CB52EEF00A6A3B3 /* WJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJRefresh.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +106,8 @@
 		CB589CBE1CB5293300A6A3B3 /* WJRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				CB589CC21CB5293300A6A3B3 /* AppDelegate.h */,
-				CB589CC31CB5293300A6A3B3 /* AppDelegate.m */,
-				CB589CC51CB5293300A6A3B3 /* ViewController.h */,
-				CB589CC61CB5293300A6A3B3 /* ViewController.m */,
+				CB589CF21CB5297F00A6A3B3 /* WJRefresh */,
+				CB589CF31CB5297F00A6A3B3 /* WJRefreshDemo */,
 				CB589CC81CB5293300A6A3B3 /* Main.storyboard */,
 				CB589CCB1CB5293300A6A3B3 /* Assets.xcassets */,
 				CB589CCD1CB5293300A6A3B3 /* LaunchScreen.storyboard */,
@@ -138,6 +141,27 @@
 				CB589CE61CB5293400A6A3B3 /* Info.plist */,
 			);
 			path = WJRefreshUITests;
+			sourceTree = "<group>";
+		};
+		CB589CF21CB5297F00A6A3B3 /* WJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				CB0867411CB62E1700DAB6EE /* WJRefreshArrow@2x.png */,
+				CB589CFA1CB52EEF00A6A3B3 /* WJRefresh.h */,
+				CB589CFB1CB52EEF00A6A3B3 /* WJRefresh.m */,
+			);
+			path = WJRefresh;
+			sourceTree = "<group>";
+		};
+		CB589CF31CB5297F00A6A3B3 /* WJRefreshDemo */ = {
+			isa = PBXGroup;
+			children = (
+				CB589CF41CB5297F00A6A3B3 /* AppDelegate.h */,
+				CB589CF51CB5297F00A6A3B3 /* AppDelegate.m */,
+				CB589CF61CB5297F00A6A3B3 /* ViewController.h */,
+				CB589CF71CB5297F00A6A3B3 /* ViewController.m */,
+			);
+			path = WJRefreshDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB589CCF1CB5293300A6A3B3 /* LaunchScreen.storyboard in Resources */,
+				CB0867421CB62E1700DAB6EE /* WJRefreshArrow@2x.png in Resources */,
 				CB589CCC1CB5293300A6A3B3 /* Assets.xcassets in Resources */,
 				CB589CCA1CB5293300A6A3B3 /* Main.storyboard in Resources */,
 			);
@@ -270,8 +295,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB589CC71CB5293300A6A3B3 /* ViewController.m in Sources */,
-				CB589CC41CB5293300A6A3B3 /* AppDelegate.m in Sources */,
+				CB589CF91CB5297F00A6A3B3 /* ViewController.m in Sources */,
+				CB589CF81CB5297F00A6A3B3 /* AppDelegate.m in Sources */,
+				CB589CFC1CB52EEF00A6A3B3 /* WJRefresh.m in Sources */,
 				CB589CC11CB5293300A6A3B3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +524,7 @@
 				CB589CEB1CB5293400A6A3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CB589CEC1CB5293400A6A3B3 /* Build configuration list for PBXNativeTarget "WJRefreshTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +533,7 @@
 				CB589CEE1CB5293400A6A3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CB589CEF1CB5293400A6A3B3 /* Build configuration list for PBXNativeTarget "WJRefreshUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +542,7 @@
 				CB589CF11CB5293400A6A3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
