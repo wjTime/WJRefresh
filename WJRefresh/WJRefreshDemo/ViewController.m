@@ -36,6 +36,7 @@
     [self.view addSubview:tableView];
     self.mtableView = tableView;
     
+    /* 初始化控件 */
     _refresh = [[WJRefresh alloc]init];
     __weak typeof(self)weakSelf = self;
     [_refresh addHeardRefreshTo:tableView heardBlock:^{
@@ -72,7 +73,6 @@
         [_refresh endRefresh];
     });
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataSource.count;
