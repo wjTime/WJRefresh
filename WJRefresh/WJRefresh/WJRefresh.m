@@ -193,6 +193,7 @@
         _timeLb.textAlignment = NSTextAlignmentCenter;
         _timeLb.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
         _timeLb.font = [UIFont systemFontOfSize:10];
+        _timeLb.text = @"加载中...";
         [self addSubview:_timeLb];
     }
     return _timeLb;
