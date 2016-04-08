@@ -10,7 +10,6 @@
 #define WJRefreshScreenW     [UIScreen mainScreen].bounds.size.width
 #import "WJRefresh.h"
 
-
 @interface WJRefresh ()<UITableViewDelegate>
 
 @property (nonatomic,weak)   UITableView *RefreshTableView;
@@ -49,12 +48,10 @@
 
 - (void)changeTime{
     if (self.isHeard && self.timeLb.hidden) {
-        NSLog(@"1111111");
         self.tipLb.frame = CGRectMake((WJRefreshScreenW-100)/2, 5, 100, 15);
         self.timeLb.hidden = NO;
     }
     if (!self.isHeard && !self.timeLb.hidden) {
-        NSLog(@"2222222");
         self.tipLb.frame = CGRectMake((WJRefreshScreenW-100)/2, 12.5, 100, 15);
         self.timeLb.hidden = YES;
     }
@@ -99,7 +96,6 @@
         }];
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(WJRefreshDropHeight, 0, 0, 0);
         if (self.heardRefresh) {
-            NSLog(@"调用头部刷新block");
             self.heardRefresh();
         }
     }
@@ -121,7 +117,6 @@
         }];
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(0, 0, WJRefreshDropHeight, 0);
         if (self.footRefresh) {
-            NSLog(@"尾部加载更多block");
             self.footRefresh();
         }
     }
@@ -138,7 +133,7 @@
 }
 
 - (void)endRefresh{
-    // 修改更新时间
+
     self.timeLb.text = [NSString stringWithFormat:@"最后更新时间:%@",[self getNowTime]];
     [self.refreshLoadingView stopAnimating];
     [UIView animateWithDuration:0.25 animations:^{
@@ -160,10 +155,6 @@
     return dateTime;
 }
 
-- (void)endFootRefresh{
-    
-}
-
 - (UIActivityIndicatorView *)refreshLoadingView{
     if (_refreshLoadingView == nil) {
         CGPoint point = CGPointMake(self.arrowImageView.frame.size.width/2 + self.arrowImageView.frame.origin.x, self.arrowImageView.frame.size.height/2 + self.arrowImageView.frame.origin.y);
@@ -178,7 +169,7 @@
 
 - (UIImageView *)arrowImageView{
     if (_arrowImageView == nil) {
-        _arrowImageView = [[UIImageView alloc]initWithFrame:CGRectMake(WJRefreshScreenW/3, 0, 15, WJRefreshDropHeight)];
+        _arrowImageView = [[UIImageView alloc]initWithFrame:CGRectMake((WJRefreshScreenW-100)/2-25, 0, 15, WJRefreshDropHeight)];
         _arrowImageView.image = [UIImage imageNamed:@"WJRefreshArrow"];
         [self addSubview:_arrowImageView];
     }
@@ -210,7 +201,6 @@
 
 
 - (void)dealloc{
-    NSLog(@"WJRefresh dealloc");
     [self.RefreshTableView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
