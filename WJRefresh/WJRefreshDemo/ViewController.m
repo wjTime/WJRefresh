@@ -37,7 +37,6 @@
     self.mtableView = tableView;
     
     _refresh = [[WJRefresh alloc]init];
-    
     __weak typeof(self)weakSelf = self;
     [_refresh addHeardRefreshTo:tableView heardBlock:^{
         [weakSelf createData];
@@ -50,7 +49,7 @@
 
 
 - (void)createData{
-    NSLog(@"---------------加载数据-----------");
+    NSLog(@"-----------头部刷新数据-----------");
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.dataSource removeAllObjects];
         self.dataSource = [NSMutableArray array];
@@ -58,23 +57,21 @@
             [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
         }
         [self.mtableView reloadData];
-        [_refresh endHeardRefresh];
+        [_refresh endRefresh];
     });
 
 }
 
 - (void)createFootData{
-    NSLog(@"---------------加载更多尾部数据-----------");
+    NSLog(@"-----------尾部加载更多数据-----------");
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         for (int i = 200; i < 210; i ++) {
             [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
         }
         [self.mtableView reloadData];
-        [_refresh endHeardRefresh];
+        [_refresh endRefresh];
     });
 }
-
-
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

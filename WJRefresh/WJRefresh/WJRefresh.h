@@ -16,7 +16,7 @@ typedef void(^refreshBlock)();
 - (void)beginHeardRefresh;
 
 /** 结束头部刷新 */
-- (void)endHeardRefresh;
+- (void)endRefresh;
 
 /** 结束尾部加载更多刷新 */
 - (void)endFootRefresh;
