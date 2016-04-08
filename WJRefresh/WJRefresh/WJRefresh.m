@@ -47,7 +47,7 @@
 
 // 切换头尾刷新控件
 - (void)changeFrameWithoffY:(CGFloat)offY{
-    if (offY <= 0 && !self.isHeard) {
+    if (offY <= 0 && !self.isHeard && !self.isFootFreshing) {
         self.tipLb.text = @"下拉刷新";
         self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
         self.isHeard = YES;
@@ -57,7 +57,7 @@
         frame.size.height = WJRefreshDropHeight;
         self.frame = frame;
     }
-    if (offY > 0 && self.isHeard) {
+    if (offY > 0 && self.isHeard && !self.isRefreshing) {
         self.isHeard = NO;
         self.tipLb.text = @"上拉加载更多";
         self.frame = CGRectMake(0, self.RefreshTableView.contentSize.height,
