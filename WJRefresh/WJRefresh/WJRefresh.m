@@ -17,6 +17,7 @@
 @property (nonatomic,copy)refreshBlock heardRefresh;
 @property (nonatomic,strong)UIImageView *arrowImageView;
 @property (nonatomic,strong)UIActivityIndicatorView *refreshLoadingView;
+@property (nonatomic,assign) BOOL isHeard;
 
 
 @property (nonatomic,assign)BOOL isRefreshing;
@@ -28,14 +29,8 @@
 - (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock{
 
     [tableView addSubview:self];
-    
-    CGRect frame = tableView.frame;
-    frame.origin.x = 0;
-    frame.origin.y = - WJRefreshDropHeight;
-    frame.size.height = WJRefreshDropHeight;
-    
-    self.frame = frame;
     self.RefreshTableView = tableView;
+    //[self changeFrameWithoffY:tableView.contentOffset.y];
     self.heardRefresh = heardBlock;
    [tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -43,15 +38,45 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor redColor];
     }
     return self;
 }
 
+- (void)changeFrameWithoffY:(CGFloat)offY{
+    NSLog(@"offY === %lf",offY);
+    if (offY <= 0 && !self.isHeard) {
+        NSLog(@"变成头部刷新控件000000000000000000000000000000000000000");
+        self.isHeard = YES;
+        CGRect frame = self.RefreshTableView.frame;
+        frame.origin.x = 0;
+        frame.origin.y = - WJRefreshDropHeight;
+        frame.size.height = WJRefreshDropHeight;
+        self.frame = frame;
+    }
+    if (offY > 0 && self.isHeard) {
+        NSLog(@"变成尾部刷新控件1111111111111111111111111111111111111111");
+        self.isHeard = NO;
+        self.frame = CGRectMake(0, self.RefreshTableView.contentSize.height,
+                                self.frame.size.width, WJRefreshDropHeight);
+    }
+    
+
+    
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     CGPoint offSetPoint = [[change valueForKey:@"new"] CGPointValue];
+    NSLog(@"off tableview frame test ========= %lf",self.RefreshTableView.frame.size.height);
+    NSLog(@"off content test ========= %lf",self.RefreshTableView.contentSize.height);
+    NSLog(@"off test =========%lf",offSetPoint.y);
+    [self changeFrameWithoffY:offSetPoint.y];
+    
     self.arrowImageView.alpha = 1.0;
     if (offSetPoint.y <= -WJRefreshDropHeight && (!self.isRefreshing)) {
+        NSLog(@"off=========%lf",offSetPoint.y);
+        
+        self.isRefreshing = YES;
         [UIView animateWithDuration:0.25 animations:^{
             self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI);
         } completion:^(BOOL finished) {
@@ -59,11 +84,10 @@
             self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
              [self.refreshLoadingView startAnimating];
         }];
-       
-        self.isRefreshing = YES;
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(WJRefreshDropHeight, 0, 0, 0);
  
         if (self.heardRefresh) {
+            NSLog(@"调用block");
             self.heardRefresh();
         }
     }
@@ -71,6 +95,18 @@
         [self.refreshLoadingView stopAnimating];
         self.isRefreshing = NO;
     }
+    
+    
+    
+}
+
+- (void)beginHeardRefresh{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.RefreshTableView.contentOffset = CGPointMake(0, -WJRefreshDropHeight);
+    } completion:^(BOOL finished) {
+        self.arrowImageView.alpha = 1;
+        self.arrowImageView.hidden = NO;
+    }];
 }
 
 - (void)endHeardRefresh{
@@ -80,6 +116,10 @@
         self.arrowImageView.alpha = 1;
         self.arrowImageView.hidden = NO;
     }];
+}
+
+- (void)endFootRefresh{
+    
 }
 
 - (UIActivityIndicatorView *)refreshLoadingView{

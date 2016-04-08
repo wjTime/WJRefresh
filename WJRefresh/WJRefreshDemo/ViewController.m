@@ -14,6 +14,7 @@
 
 @property (nonatomic,weak)   UITableView     *mtableView;
 @property (nonatomic,strong) NSMutableArray  *dataSource;
+@property (nonatomic,strong) WJRefresh *refresh;
 
 @end
 
@@ -24,7 +25,6 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createTableView];
-    [self createData];
 }
 
 - (void)createTableView{
@@ -36,28 +36,29 @@
     [self.view addSubview:tableView];
     self.mtableView = tableView;
     
-    WJRefresh *refresh = [[WJRefresh alloc]init];
-    __weak typeof(refresh)weakRefresh = refresh;
-    [refresh addHeardRefreshTo:self.mtableView heardBlock:^{
-        NSLog(@"----------------主页面加载数据----------------");
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakRefresh endHeardRefresh];
-        });
+    _refresh = [[WJRefresh alloc]init];
+    __weak typeof(self)weakSelf = self;
+    [_refresh addHeardRefreshTo:self.mtableView heardBlock:^{
+        [weakSelf createData];
     }];
-    //[self.mtableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-    
+    [_refresh beginHeardRefresh];
     
 }
 
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-//    NSLog(@"0000000000000");
-//}
+
 
 - (void)createData{
-    self.dataSource = [NSMutableArray array];
-    for (int i = 100; i < 120; i ++) {
-        [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
-    }
+    NSLog(@"---------------加载数据-----------");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.dataSource removeAllObjects];
+        self.dataSource = [NSMutableArray array];
+        for (int i = 100; i < 120; i ++) {
+            [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
+        }
+        [self.mtableView reloadData];
+        [_refresh endHeardRefresh];
+    });
+    
 
 }
 
