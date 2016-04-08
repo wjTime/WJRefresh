@@ -10,7 +10,7 @@ typedef void(^refreshBlock)();
 
 @interface WJRefresh : UIView
 /** 添加WJRefresh控件到tableview上面 */
-- (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock;
+- (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock footBlok:(refreshBlock)footBlock;
 
 /** 开始头部刷新 */
 - (void)beginHeardRefresh;

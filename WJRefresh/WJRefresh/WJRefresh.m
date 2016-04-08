@@ -13,26 +13,27 @@
 
 @interface WJRefresh ()<UITableViewDelegate>
 
-@property (nonatomic,weak)UITableView *RefreshTableView;
-@property (nonatomic,copy)refreshBlock heardRefresh;
-@property (nonatomic,strong)UIImageView *arrowImageView;
-@property (nonatomic,strong)UIActivityIndicatorView *refreshLoadingView;
+@property (nonatomic,weak)   UITableView *RefreshTableView;
+@property (nonatomic,copy)   refreshBlock heardRefresh;
+@property (nonatomic,copy)   refreshBlock footRefresh;
+@property (nonatomic,strong) UIImageView *arrowImageView;
+@property (nonatomic,strong) UIActivityIndicatorView *refreshLoadingView;
+
 @property (nonatomic,assign) BOOL isHeard;
+@property (nonatomic,assign) BOOL isRefreshing;
 
-
-@property (nonatomic,assign)BOOL isRefreshing;
+@property (nonatomic,assign) BOOL isFootFreshing;
 
 @end
 
 @implementation WJRefresh
 
-- (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock{
-
+- (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock footBlok:(refreshBlock)footBlock{
     [tableView addSubview:self];
     self.RefreshTableView = tableView;
-    //[self changeFrameWithoffY:tableView.contentOffset.y];
     self.heardRefresh = heardBlock;
-   [tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    self.footRefresh = footBlock;
+    [tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -43,9 +44,11 @@
     return self;
 }
 
+// 切换头尾刷新控件
 - (void)changeFrameWithoffY:(CGFloat)offY{
     NSLog(@"offY === %lf",offY);
     if (offY <= 0 && !self.isHeard) {
+        self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
         NSLog(@"变成头部刷新控件000000000000000000000000000000000000000");
         self.isHeard = YES;
         CGRect frame = self.RefreshTableView.frame;
@@ -59,10 +62,9 @@
         self.isHeard = NO;
         self.frame = CGRectMake(0, self.RefreshTableView.contentSize.height,
                                 self.frame.size.width, WJRefreshDropHeight);
+        self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI);
     }
-    
 
-    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -97,6 +99,26 @@
     }
     
     
+    if (offSetPoint.y + self.RefreshTableView.frame.size.height  >= self.RefreshTableView.contentSize.height +WJRefreshDropHeight && !self.isFootFreshing && self.RefreshTableView.contentSize.height > self.RefreshTableView.frame.size.height) {
+        
+        self.arrowImageView.hidden = NO;
+        NSLog(@"cm=========%lf",offSetPoint.y + self.RefreshTableView.frame.size.height + WJRefreshDropHeight);
+        NSLog(@"footRefresh----------------------------");
+        self.isFootFreshing = YES;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
+        } completion:^(BOOL finished) {
+            self.arrowImageView.hidden = YES;
+            self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI);
+            [self.refreshLoadingView startAnimating];
+        }];
+        self.RefreshTableView.contentInset = UIEdgeInsetsMake(0, 0, WJRefreshDropHeight, 0);
+        if (self.footRefresh) {
+            NSLog(@"调用 尾部加载更多  block");
+            self.footRefresh();
+        }
+    }
+    
     
 }
 
@@ -110,6 +132,13 @@
 }
 
 - (void)endHeardRefresh{
+    self.isRefreshing = NO;
+    if (self.isFootFreshing) {
+        self.isFootFreshing= NO;
+        self.frame = CGRectMake(0, self.RefreshTableView.contentSize.height,
+                                self.frame.size.width, WJRefreshDropHeight);
+    }
+    [self.refreshLoadingView stopAnimating];
     [UIView animateWithDuration:0.25 animations:^{
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     } completion:^(BOOL finished) {

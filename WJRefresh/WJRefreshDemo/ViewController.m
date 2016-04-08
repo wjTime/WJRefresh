@@ -37,14 +37,16 @@
     self.mtableView = tableView;
     
     _refresh = [[WJRefresh alloc]init];
+    
     __weak typeof(self)weakSelf = self;
-    [_refresh addHeardRefreshTo:self.mtableView heardBlock:^{
+    [_refresh addHeardRefreshTo:tableView heardBlock:^{
         [weakSelf createData];
+    } footBlok:^{
+        [weakSelf createFootData];
     }];
     [_refresh beginHeardRefresh];
     
 }
-
 
 
 - (void)createData{
@@ -58,8 +60,18 @@
         [self.mtableView reloadData];
         [_refresh endHeardRefresh];
     });
-    
 
+}
+
+- (void)createFootData{
+    NSLog(@"---------------加载更多尾部数据-----------");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (int i = 200; i < 210; i ++) {
+            [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
+        }
+        [self.mtableView reloadData];
+        [_refresh endHeardRefresh];
+    });
 }
 
 
