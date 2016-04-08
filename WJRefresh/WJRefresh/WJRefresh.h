@@ -9,6 +9,7 @@ typedef void(^refreshBlock)();
 #import <UIKit/UIKit.h>
 
 @interface WJRefresh : UIView
+
 /** 添加WJRefresh控件到tableview上面 */
 - (void)addHeardRefreshTo:(UITableView *)tableView heardBlock:(refreshBlock)heardBlock footBlok:(refreshBlock)footBlock;
 
@@ -18,7 +19,6 @@ typedef void(^refreshBlock)();
 /** 结束头部刷新 */
 - (void)endRefresh;
 
-/** 结束尾部加载更多刷新 */
-- (void)endFootRefresh;
+
 
 @end

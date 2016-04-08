@@ -19,6 +19,7 @@
 @property (nonatomic,strong) UIImageView *arrowImageView;
 @property (nonatomic,strong) UIActivityIndicatorView *refreshLoadingView;
 @property (nonatomic,strong) UILabel *tipLb;
+@property (nonatomic,strong) UILabel *timeLb;
 
 @property (nonatomic,assign) BOOL isHeard;
 @property (nonatomic,assign) BOOL isRefreshing;
@@ -40,13 +41,30 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
-// 切换头尾刷新控件
+
+- (void)changeTime{
+    if (self.isHeard && self.timeLb.hidden) {
+        NSLog(@"1111111");
+        self.tipLb.frame = CGRectMake((WJRefreshScreenW-100)/2, 5, 100, 15);
+        self.timeLb.hidden = NO;
+    }
+    if (!self.isHeard && !self.timeLb.hidden) {
+        NSLog(@"2222222");
+        self.tipLb.frame = CGRectMake((WJRefreshScreenW-100)/2, 12.5, 100, 15);
+        self.timeLb.hidden = YES;
+    }
+}
+
+
 - (void)changeFrameWithoffY:(CGFloat)offY{
+    
+    [self changeTime];
+    
     if (offY <= 0 && !self.isHeard && !self.isFootFreshing) {
         self.tipLb.text = @"下拉刷新";
         self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);
@@ -64,7 +82,6 @@
                                 self.frame.size.width, WJRefreshDropHeight);
         self.arrowImageView.transform = CGAffineTransformMakeRotation(M_PI);
     }
-
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -81,7 +98,6 @@
              [self.refreshLoadingView startAnimating];
         }];
         self.RefreshTableView.contentInset = UIEdgeInsetsMake(WJRefreshDropHeight, 0, 0, 0);
- 
         if (self.heardRefresh) {
             NSLog(@"调用头部刷新block");
             self.heardRefresh();
@@ -122,6 +138,8 @@
 }
 
 - (void)endRefresh{
+    // 修改更新时间
+    self.timeLb.text = [NSString stringWithFormat:@"最后更新时间:%@",[self getNowTime]];
     [self.refreshLoadingView stopAnimating];
     [UIView animateWithDuration:0.25 animations:^{
         if (self.isFootFreshing) {
@@ -133,6 +151,13 @@
         }completion:^(BOOL finished) {
             self.arrowImageView.hidden = NO;
         }];
+}
+
+- (NSString *)getNowTime{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"HH:mm"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    return dateTime;
 }
 
 - (void)endFootRefresh{
@@ -164,13 +189,25 @@
     if (_tipLb == nil) {
         _tipLb = [[UILabel alloc]initWithFrame:CGRectMake((WJRefreshScreenW-100)/2, 5, 100, 15)];
         _tipLb.textAlignment = NSTextAlignmentCenter;
-        _tipLb.textColor = [UIColor grayColor];
-        _tipLb.font = [UIFont systemFontOfSize:12];
-        //_tipLb.backgroundColor = [UIColor blueColor];
+        _tipLb.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
+        _tipLb.font = [UIFont systemFontOfSize:10];
         [self addSubview:_tipLb];
     }
     return _tipLb;
 }
+
+- (UILabel *)timeLb{
+    if (_timeLb == nil) {
+        _timeLb = [[UILabel alloc]initWithFrame:CGRectMake((WJRefreshScreenW-100)/2, 20, 100, 15)];
+        _timeLb.textAlignment = NSTextAlignmentCenter;
+        _timeLb.textColor = [UIColor colorWithRed:90/255.0 green:90/255.0 blue:90/255.0 alpha:1];
+        _timeLb.font = [UIFont systemFontOfSize:10];
+        [self addSubview:_timeLb];
+    }
+    return _timeLb;
+}
+
+
 
 - (void)dealloc{
     NSLog(@"WJRefresh dealloc");

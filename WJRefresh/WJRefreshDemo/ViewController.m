@@ -32,7 +32,7 @@
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor grayColor];
+    tableView.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     [self.view addSubview:tableView];
     self.mtableView = tableView;
     
