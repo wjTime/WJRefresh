@@ -52,7 +52,7 @@
 
 - (void)createData{
     NSLog(@"-----------头部刷新数据-----------");
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.dataSource removeAllObjects];
         self.dataSource = [NSMutableArray array];
         for (int i = 100; i < 120; i ++) {
